@@ -1,0 +1,134 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary: #2B5CE6;
+  --primary-light: #EBF0FF;
+  --success: #18A058;
+  --warning: #F0A020;
+  --danger: #D03050;
+  --bg: #F5F7FA;
+  --surface: #FFFFFF;
+  --border: #E4E7ED;
+  --text: #303133;
+  --text-secondary: #909399;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --radius: 8px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.panel-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge-conf {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.badge-high { background: #D4EDDA; color: #155724; }
+.badge-mid  { background: #FFF3CD; color: #856404; }
+.badge-low  { background: #F8D7DA; color: #721C24; }
+
+.drag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background: var(--primary-light);
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  font-size: 13px;
+  cursor: grab;
+  user-select: none;
+  transition: all 0.15s;
+  white-space: nowrap;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.drag-chip:hover {
+  background: var(--primary);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(43, 92, 230, 0.3);
+}
+
+.drag-chip.is-dragging {
+  opacity: 0.5;
+}
+
+.drop-target {
+  min-height: 36px;
+  border: 2px dashed var(--border);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding: 4px 10px;
+  transition: all 0.15s;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.drop-target.drag-over {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.drop-target.has-value {
+  border-style: solid;
+  border-color: var(--success);
+  background: #F0FFF4;
+  color: var(--success);
+}
+
+.scrollable {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.scrollable::-webkit-scrollbar { width: 4px; }
+.scrollable::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.fade-enter-active, .fade-leave-active { transition: opacity 0.2s; }
+.fade-enter-from, .fade-leave-to { opacity: 0; }
+
+.el-button--primary {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
