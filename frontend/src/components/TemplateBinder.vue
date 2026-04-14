@@ -23,8 +23,9 @@
             'drag-over': dragOverCol === col,
             'has-value': !!mappings[col],
           }"
+          @dragenter.prevent="dragOverCol = col"
           @dragover.prevent="dragOverCol = col"
-          @dragleave="dragOverCol = null"
+          @dragleave="onDragLeave($event, col)"
           @drop.prevent="onDrop($event, col)"
         >
           <template v-if="mappings[col]">
@@ -103,9 +104,18 @@ const showSave = ref(false)
 const saveName = ref('')
 const saveDesc = ref('')
 
+function onDragLeave(e: DragEvent, col: string) {
+  // Only clear when actually leaving the drop-target, not when entering a child
+  const related = e.relatedTarget as Node | null
+  if (!related || !(e.currentTarget as HTMLElement).contains(related)) {
+    if (dragOverCol.value === col) dragOverCol.value = null
+  }
+}
+
 function onDrop(e: DragEvent, col: string) {
   dragOverCol.value = null
-  const raw = e.dataTransfer?.getData('application/json')
+  // Support both text/plain (standard) and application/json (fallback)
+  const raw = e.dataTransfer?.getData('text/plain') || e.dataTransfer?.getData('application/json')
   if (!raw) return
   try {
     const data = JSON.parse(raw)
@@ -197,12 +207,19 @@ function doSave() {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  pointer-events: none;
 }
 
 .clear-btn {
   cursor: pointer;
   color: var(--danger);
   flex-shrink: 0;
+  pointer-events: all;  /* keep clickable */
+}
+
+/* Prevent child elements from stealing drag events */
+.drop-target > :not(.clear-btn) {
+  pointer-events: none;
 }
 
 .del-col {

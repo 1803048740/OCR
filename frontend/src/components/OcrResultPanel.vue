@@ -53,7 +53,8 @@ function confClass(conf: number) {
 
 function onDragStart(e: DragEvent, field: OCRField) {
   e.dataTransfer!.effectAllowed = 'copy'
-  e.dataTransfer!.setData('application/json', JSON.stringify({
+  // Use text/plain for maximum browser compatibility
+  e.dataTransfer!.setData('text/plain', JSON.stringify({
     id: field.id,
     text: field.text,
     confidence: field.confidence,
